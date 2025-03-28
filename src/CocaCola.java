@@ -6,4 +6,12 @@ public class CocaCola extends Tooted{
         super(tootenimetus, hind, mituTükki);
         this.maht_ml = maht_ml;
     }
+
+    public int getMaht_ml() {
+        return maht_ml;
+    }
+
+    public void setMaht_ml(int maht_ml) {
+        this.maht_ml = maht_ml;
+    }
 }
