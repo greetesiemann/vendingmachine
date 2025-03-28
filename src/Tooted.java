@@ -34,6 +34,10 @@ public class Tooted implements Comparable<Tooted> {
         this.mituTükki = mituTükki;
     }
 
+    public void vähendaToodet() {
+        this.mituTükki -= 1;
+    }
+
     @Override
     public String toString() {
         return "Tooted{" +
