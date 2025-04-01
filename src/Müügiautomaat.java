@@ -7,10 +7,9 @@ public class Müügiautomaat {
     private List<Tooted> tooted;
     private double rahaAutomaadis;
 
-    public Müügiautomaat(String automaadinimi, double rahaAutomaadis) {
+    public Müügiautomaat(String automaadinimi) {
         this.automaadinimi = automaadinimi;
         this.tooted = new ArrayList<>();
-        this.rahaAutomaadis = 0;
     }
 
     public String getAutomaadinimi() {
@@ -41,7 +40,13 @@ public class Müügiautomaat {
        return toode.getMituTükki();
     }
 
-    public void lisaRaha(Tooted toode) {
-        this.rahaAutomaadis += toode.getHind();
+    public void lisaRaha(Tooted toode) {this.rahaAutomaadis += toode.getHind();}
+
+    public List<Tooted> getTooted() {
+        return tooted;
+    }
+
+    public void setTooted(List<Tooted> tooted) {
+        this.tooted = tooted;
     }
 }
