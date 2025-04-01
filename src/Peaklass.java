@@ -30,6 +30,7 @@ public class Peaklass {
         try {
             List<Tooted> tooted = loeTooted("tooted.txt");
 
+
         }
         catch (FileNotFoundException e) {
             System.out.println("Faili ei leitud!");
