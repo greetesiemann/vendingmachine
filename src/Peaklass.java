@@ -35,52 +35,52 @@ public class Peaklass {
     public static void main(String[] args) {
         try {
             List<Tooted> tooted = loeTooted("tooted.txt"); //loeme tooted
-            Müügiautomaat automaat_Delta = new Müügiautomaat ("Delta");
-            Hooldaja Delta_hooldaja = new Hooldaja("Jaanus Koppel", "Jaanus123"); // loome "Delta" automaadile hooldaja
+            Müügiautomaat automaatDelta = new Müügiautomaat ("Delta");
+            Hooldaja deltaHooldaja = new Hooldaja("Jaanus Koppel", "Jaanus123"); // loome "Delta" automaadile hooldaja
             for (int toode = 0; toode < tooted.size(); toode++) { //lisame tooted automaati
-                automaat_Delta.lisaToode(tooted.get(toode));
+                automaatDelta.lisaToode(tooted.get(toode));
             }
             //Uurime, kes on automaadi kasutaja
             Scanner sc = new Scanner(System.in);
             System.out.println("Tere tulemest!");
-            System.out.println("Kas klient või hooldaja?");
+            System.out.println("Kas oled klient või hooldaja?");
             String vastus = sc.nextLine();
 
-            if (vastus.equals("Hooldaja")) {// kui hooldaja siis kutsume välja erinevaid hooldaja meetodeid
+            if (vastus.equals("hooldaja")) {// kui hooldaja siis kutsume välja erinevaid hooldaja meetodeid
                 System.out.println("Sisesta parool: ");
-                String sisestatud_parool = sc.nextLine();
-                boolean õige_parool = Delta_hooldaja.kontrolliParool(sisestatud_parool); //kontorllime parooli
-                if (õige_parool) {
-                    System.out.println("Tere hooldaja " + Delta_hooldaja.getNimi());
+                String sisestatudParool = sc.nextLine();
+                boolean õigeParool = deltaHooldaja.kontrolliParool(sisestatudParool); //kontorllime parooli
+                if (õigeParool) {
+                    System.out.println("Tere hooldaja " + deltaHooldaja.getNimi());
                     System.out.println("Mida soovid teada?"); // väljastame hooldajale tegevused, mida võimalik teha
                     // mõtlesin äkki selle switch case'iga
                 } else {
                     System.out.println("Sisestasid vale parooli. Palun proovi uuesti!");
                 }
 
-            } else if (vastus.equals("Klient")) {
+            } else if (vastus.equals("klient")) {
                 System.out.println("Müügiautomaadis ostmiseks olevad tooted: ");
                 for (int indeks = 0; indeks < tooted.size(); indeks++) { // kui klient siis väljastame tooted, koos vastavate numbritega
                     System.out.println(indeks + " " + tooted.get(indeks).getTootenimetus() + " " + tooted.get(indeks).getHind());
                 }
 
-                boolean soovin_veel_tooteid = true; // muutuja, mis kontrollib kas klient soovib veel tooteid osta
-                while (soovin_veel_tooteid) {
+                boolean soovinVeelTooteid = true; // muutuja, mis kontrollib kas klient soovib veel tooteid osta
+                while (soovinVeelTooteid) {
                     System.out.println("Vali toode: ");
                     String tootenr = sc.nextLine();
-                    Tooted ostetud_toode = tooted.get(Integer.parseInt(tootenr));
+                    Tooted ostetudToode = tooted.get(Integer.parseInt(tootenr));
                     //väljastame kleindile toote nimetuse, mis ta ostis
-                    System.out.println("Palun võta oma ostetud toode" + ostetud_toode.getTootenimetus());
-                    ostetud_toode.vähendaToodet(); // vähendame ostetud toote arvu
-                    if (ostetud_toode.getMituTükki() == 0) { // kontorllime, kas toodet on veel alles
-                        automaat_Delta.eemaldaToode(ostetud_toode); //vajadusel eemaldame selle
+                    System.out.println("Palun võta oma ostetud toode" + ostetudToode.getTootenimetus());
+                    ostetudToode.vähendaToodet(); // vähendame ostetud toote arvu
+                    if (ostetudToode.getMituTükki() == 0) { // kontorllime, kas toodet on veel alles
+                        automaatDelta.eemaldaToode(ostetudToode); //vajadusel eemaldame selle
                     }
 
                     System.out.println("Kas soovid veel midagi osta?");
                     String valik = sc.nextLine();
                     if (valik.equals("Ei")) {
                         System.out.println("Aitäh, et meid külastsid! Ilusat päeva jätku!");
-                        soovin_veel_tooteid = false;
+                        soovinVeelTooteid = false;
                     }
                     else {
                         continue;

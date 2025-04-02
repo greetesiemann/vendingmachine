@@ -26,8 +26,8 @@ public class Hooldaja {
         this.parool = parool;
     }
 
-    public boolean kontrolliParool(String Sisestatud_parool) {
-        if (Sisestatud_parool.equals(parool)) {
+    public boolean kontrolliParool(String sisestatudParool) {
+        if (sisestatudParool.equals(parool)) {
             return true;
         } else {
             return false;
@@ -37,6 +37,8 @@ public class Hooldaja {
     public void automaadisRaha (Müügiautomaat automaat){
         System.out.println(automaat.getRahaAutomaadis());
     }
+
+
     public void automamadisTooteid (Müügiautomaat automaat) {
         List<Tooted> tooted = automaat.getTooted();
         System.out.println("Automaadis olevad tooted: ");
@@ -53,10 +55,10 @@ public class Hooldaja {
         Scanner sc = new Scanner(System.in);
         System.out.println("Automaadis on raha: " + automaat.getRahaAutomaadis());
         System.out.println("Sisesta väljavõtetav summa: ");
-        double väljavõetav_raha = Double.parseDouble(sc.nextLine());
+        double väljavõetavRaha = Double.parseDouble(sc.nextLine());
 
-        if (automaat.getRahaAutomaadis() - väljavõetav_raha >= 0) { // kui automaadis on piisavalt raha
-            automaat.setRahaAutomaadis(automaat.getRahaAutomaadis() - väljavõetav_raha); // salvestame allesjäänud raha
+        if (automaat.getRahaAutomaadis() - väljavõetavRaha >= 0) { // kui automaadis on piisavalt raha
+            automaat.setRahaAutomaadis(automaat.getRahaAutomaadis() - väljavõetavRaha); // salvestame allesjäänud raha
         }
         else {
             System.out.println("Sisestasid liiga suure summa. Palun sisesta väiksem summa.");
