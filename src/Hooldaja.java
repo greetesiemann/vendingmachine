@@ -65,7 +65,7 @@ public class Hooldaja {
         }
     }
 
-    public void misHooldusTöidVajaTeha(Müügiautomaat müügiautomaat) {
+    /*public void misHooldusTöidVajaTeha(Hooldaja hooldaja, Müügiautomaat müügiautomaat) {
         Scanner sc = new Scanner(System.in);
         System.out.println("1 Palju on automaadis raha?");
         System.out.println("2 Millised tooted on automaadis?");
@@ -79,18 +79,18 @@ public class Hooldaja {
 
             switch (tegevusenr) {
                 case 1:
-                    automaadisRaha(müügiautomaat);
+                    hooldaja.automaadisRaha(müügiautomaat);
                 case 2:
-                    automamadisTooteid(müügiautomaat);
+                    hooldaja.automamadisTooteid(müügiautomaat);
                 case 3:
-                    võtaKoguRahaVälja(müügiautomaat);
+                    hooldaja.võtaKoguRahaVälja(müügiautomaat);
                 case 4:
-                    võtaOsaliseltRahaVälja(müügiautomaat);
+                    hooldaja.võtaOsaliseltRahaVälja(müügiautomaat);
                 case 0:
                     System.out.println("Hooldus edukalt sooritatud" + "\n");
                     break;
             }
         }
-    }
+    }*/
 
 }

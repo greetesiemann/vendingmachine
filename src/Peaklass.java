@@ -62,7 +62,7 @@ public class Peaklass {
                     if (õigeParool) {
                         System.out.println("Tere hooldaja " + deltaHooldaja.getNimi());
                         System.out.println("Mida soovid teada?"); // väljastame hooldajale tegevused, mida võimalik teha
-                        deltaHooldaja.misHooldusTöidVajaTeha(automaatDelta);
+                        //deltaHooldaja.misHooldusTöidVajaTeha(deltaHooldaja, automaatDelta);
                     } else {
                         System.out.println("Sisestasid vale parooli. Palun proovi uuesti!");
                     }
