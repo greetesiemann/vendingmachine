@@ -54,7 +54,7 @@ public class Hooldaja {
     public void võtaOsaliseltRahaVälja (Müügiautomaat automaat) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Automaadis on raha: " + automaat.getRahaAutomaadis());
-        System.out.println("Sisesta väljavõtetav summa: ");
+        System.out.println("Sisesta väljavõetav summa: ");
         double väljavõetavRaha = Double.parseDouble(sc.nextLine());
 
         if (automaat.getRahaAutomaadis() - väljavõetavRaha >= 0) { // kui automaadis on piisavalt raha

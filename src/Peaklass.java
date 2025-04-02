@@ -111,7 +111,7 @@ public class Peaklass {
                         System.out.println("Kas soovid veel midagi osta? ('jah' või 'ei')");
                         String valik = sc.nextLine();
                         if (valik.equals("ei")) {
-                            System.out.println("Aitäh, et meid külastsid! Ilusat päeva jätku!");
+                            System.out.println("Aitäh, et meid külastasid! Ilusat päeva jätku!");
                             System.out.println();
                             soovinVeelTooteid = false;
                         } else {
