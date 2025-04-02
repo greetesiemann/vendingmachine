@@ -70,7 +70,7 @@ public class Peaklass {
                 } else if (vastus.equals("klient")) {
                     System.out.println("Müügiautomaadis ostmiseks olevad tooted: ");
 
-                    for (int indeks = 0; indeks < tooted.size(); indeks++) { // kui klient siis väljastame tooted, koos vastavate numbritega
+                    for (int indeks = 0; indeks < tooted.size(); indeks++) { // kui klient siis väljastame tooted, koos vastavate numbrite ja hindadega
                         System.out.println(indeks + " " + tooted.get(indeks).getTootenimetus() + " " + tooted.get(indeks).getHind());
                     }
 
@@ -89,10 +89,12 @@ public class Peaklass {
                                 if (toodeSobib.equals("jah")) {
                                     System.out.println("Palun võta oma ostetud toode " + juhuslikultOstetudToode.getTootenimetus());
                                     juhuslikultOstetudToode.vähendaToodet();
+                                    automaatDelta.lisaRaha(juhuslikultOstetudToode); //lisame automaati raha
                                     if (juhuslikultOstetudToode.getMituTükki() == 0) { // kontorllime, kas toodet on veel alles
                                         automaatDelta.eemaldaToode(juhuslikultOstetudToode); //vajadusel eemaldame selle
                                     }
                                     break;
+
                                 } else {
                                     continue;
                                 }
@@ -103,9 +105,11 @@ public class Peaklass {
                             //väljastame kleindile toote nimetuse, mis ta ostis
                             System.out.println("Palun võta oma ostetud toode " + ostetudToode.getTootenimetus());
                             ostetudToode.vähendaToodet(); // vähendame ostetud toote arvu
+                            automaatDelta.lisaRaha(ostetudToode); //lisame automaati raha
                             if (ostetudToode.getMituTükki() == 0) { // kontorllime, kas toodet on veel alles
                                 automaatDelta.eemaldaToode(ostetudToode); //vajadusel eemaldame selle
                             }
+
                         }
 
                         System.out.println("Kas soovid veel midagi osta? ('jah' või 'ei')");

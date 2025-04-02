@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Müügiautomaat {
 
@@ -48,5 +49,23 @@ public class Müügiautomaat {
 
     public void setTooted(List<Tooted> tooted) {
         this.tooted = tooted;
+    }
+
+    public boolean Küsi_KontrolliRaha(Tooted toode) {
+        Scanner sc = new Scanner(System.in);
+        double makstudRaha = -1; //algväärtustame muutuja
+        while(makstudRaha != toode.getHind()) {
+            System.out.println("Sisesta rahasumma: " + toode.getHind());
+            makstudRaha = Double.parseDouble(sc.nextLine());
+            if (makstudRaha == toode.getHind()) {
+                return true;
+            }
+            else {
+                System.out.println("Sisestasid vale rahasumma. Proovi uuesti");
+                continue;
+            }
+        }
+
+        return true;
     }
 }
