@@ -1,4 +1,4 @@
-public class Tooted implements Comparable<Tooted> {
+public abstract class Tooted implements Comparable<Tooted> {
 
     private String tootenimetus;
     private double hind;
@@ -9,6 +9,8 @@ public class Tooted implements Comparable<Tooted> {
         this.hind = hind;
         this.mituTükki = mituTükki;
     }
+
+    public abstract void tooteMüügiHind();
 
     public String getTootenimetus() {
         return tootenimetus;

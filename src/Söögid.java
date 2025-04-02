@@ -6,6 +6,12 @@ public class Söögid extends Tooted{
         this.kaal_g = kaal_g;
     }
 
+    @Override
+    public void tooteMüügiHind() {
+        double müügiHind = Math.ceil(getHind() + getHind() * 0.35);
+        setHind(müügiHind);
+    }
+
     public int getKaal_g() {
         return kaal_g;
     }

@@ -6,6 +6,12 @@ public class Joogid extends Tooted {
         this.maht_ml = maht_ml;
     }
 
+    @Override
+    public void tooteMüügiHind() {
+        double müügiHind = Math.ceil(getHind() + getHind() * 0.55);
+        setHind(müügiHind);
+    }
+
     public int getMaht_ml() {
         return maht_ml;
     }

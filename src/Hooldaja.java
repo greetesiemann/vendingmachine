@@ -65,4 +65,32 @@ public class Hooldaja {
         }
     }
 
+    public void misHooldusTöidVajaTeha(Müügiautomaat müügiautomaat) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1 Palju on automaadis raha?");
+        System.out.println("2 Millised tooted on automaadis?");
+        System.out.println("3 Võtta kogu raha automaadist välja");
+        System.out.println("4 Võtta osa raha automaadist välja");
+        System.out.println("0 Soovin hoolduse lõpetada");
+
+        while (true) {
+            System.out.println("Sisesta tegevuse number, mida soovid teha");
+            int tegevusenr = Integer.parseInt(sc.nextLine());
+
+            switch (tegevusenr) {
+                case 1:
+                    automaadisRaha(müügiautomaat);
+                case 2:
+                    automamadisTooteid(müügiautomaat);
+                case 3:
+                    võtaKoguRahaVälja(müügiautomaat);
+                case 4:
+                    võtaOsaliseltRahaVälja(müügiautomaat);
+                case 0:
+                    System.out.println("Hooldus edukalt sooritatud" + "\n");
+                    break;
+            }
+        }
+    }
+
 }
