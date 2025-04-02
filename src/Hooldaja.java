@@ -65,7 +65,7 @@ public class Hooldaja {
         }
     }
 
-    /*public void misHooldusTöidVajaTeha(Hooldaja hooldaja, Müügiautomaat müügiautomaat) {
+    public void misHooldusTöidVajaTeha(Hooldaja hooldaja, Müügiautomaat müügiautomaat) {
         Scanner sc = new Scanner(System.in);
         System.out.println("1 Palju on automaadis raha?");
         System.out.println("2 Millised tooted on automaadis?");
@@ -91,6 +91,6 @@ public class Hooldaja {
                     break;
             }
         }
-    }*/
+    }
 
 }

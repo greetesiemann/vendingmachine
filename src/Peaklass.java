@@ -34,7 +34,7 @@ public class Peaklass {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
         try {
             List<Tooted> tooted = loeTooted("tooted.txt"); //loeme tooted
@@ -47,10 +47,10 @@ public class Peaklass {
             for (int toode = 0; toode < tooted.size(); toode++) { //lisame tooted automaati
                 automaatDelta.lisaToode(tooted.get(toode));
             }
-            while (tooted.isEmpty()) {
+            while (!tooted.isEmpty()) {
                 //Uurime, kes on automaadi kasutaja
                 Scanner sc = new Scanner(System.in);
-                System.out.println("Tere tulemest!");
+                System.out.println("Tere tulemast!");
                 System.out.println("Kas oled klient või hooldaja?");
                 String vastus = sc.nextLine();
 
@@ -62,7 +62,7 @@ public class Peaklass {
                     if (õigeParool) {
                         System.out.println("Tere hooldaja " + deltaHooldaja.getNimi());
                         System.out.println("Mida soovid teada?"); // väljastame hooldajale tegevused, mida võimalik teha
-                        //deltaHooldaja.misHooldusTöidVajaTeha(deltaHooldaja, automaatDelta);
+                        deltaHooldaja.misHooldusTöidVajaTeha(deltaHooldaja, automaatDelta);
                     } else {
                         System.out.println("Sisestasid vale parooli. Palun proovi uuesti!");
                     }
