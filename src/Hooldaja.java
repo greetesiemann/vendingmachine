@@ -86,10 +86,9 @@ public class Hooldaja {
                     hooldaja.võtaKoguRahaVälja(müügiautomaat);
                 case 4:
                     hooldaja.võtaOsaliseltRahaVälja(müügiautomaat);
-                case 0:
-                    System.out.println("Hooldus edukalt sooritatud" + "\n");
-                    break;
+
             }
+            if(tegevusenr == 0) break;
         }
     }
 
