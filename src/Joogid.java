@@ -19,4 +19,11 @@ public class Joogid extends Tooted {
     public void setMaht_ml(int maht_ml) {
         this.maht_ml = maht_ml;
     }
+
+    @Override
+    public String toString() {
+        return "Joogid{" + super.toString() +
+                "maht_ml=" + maht_ml +
+                '}';
+    }
 }

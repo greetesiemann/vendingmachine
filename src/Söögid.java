@@ -19,4 +19,11 @@ public class Söögid extends Tooted{
     public void setKaal_g(int kaal_g) {
         this.kaal_g = kaal_g;
     }
+
+    @Override
+    public String toString() {
+        return "Söögid{" + super.toString() +
+                "kaal_g=" + kaal_g +
+                '}';
+    }
 }

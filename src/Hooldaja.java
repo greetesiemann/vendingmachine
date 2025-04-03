@@ -39,7 +39,7 @@ public class Hooldaja {
     }
 
 
-    public void automamadisTooteid (Müügiautomaat automaat) {
+    public void automaadisTooteid(Müügiautomaat automaat) {
         List<Tooted> tooted = automaat.getTooted();
         System.out.println("Automaadis olevad tooted: ");
         for (int i = 0; i < tooted.size(); i++) {
@@ -94,7 +94,7 @@ public class Hooldaja {
                     hooldaja.automaadisRaha(müügiautomaat);
                     continue;
                 case 2:
-                    hooldaja.automamadisTooteid(müügiautomaat);
+                    hooldaja.automaadisTooteid(müügiautomaat);
                     continue;
                 case 3:
                     hooldaja.võtaKoguRahaVälja(müügiautomaat);
@@ -109,7 +109,7 @@ public class Hooldaja {
                     System.out.println(toodeMilleKohtaInfo.toString());
                     continue;
                 case 6:
-                    System.out.println("Sisestra toote nimi, mille kohta tahad infot saada");
+                    System.out.println("Sisesta toote nimi, mille kohta tahad infot saada");
                     String otsitav2 = sc.nextLine();
                     Tooted toodeMituTükkiOtsime = otsitavToode(müügiautomaat, otsitav2);
                     System.out.println("Toodet " + otsitav2 + " on alles veel " + müügiautomaat.mituTükkiOnToodet(toodeMituTükkiOtsime) + " tükki");
