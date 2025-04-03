@@ -80,16 +80,12 @@ public class Hooldaja {
             switch (tegevusenr) {
                 case 1:
                     hooldaja.automaadisRaha(müügiautomaat);
-
                 case 2:
                     hooldaja.automamadisTooteid(müügiautomaat);
-
                 case 3:
                     hooldaja.võtaKoguRahaVälja(müügiautomaat);
-
                 case 4:
                     hooldaja.võtaOsaliseltRahaVälja(müügiautomaat);
-
                 case 0:
                     System.out.println("Hooldus edukalt sooritatud" + "\n");
                     break;
