@@ -65,12 +65,24 @@ public class Hooldaja {
         }
     }
 
+    public Tooted otsitavToode(Müügiautomaat müügiautomaat, String otsitavToode) {
+        List<Tooted> tooted = müügiautomaat.getTooted();
+        for (Tooted toode : tooted) {
+            if (toode.getTootenimetus().equals(otsitavToode)) {
+                return toode;
+            }
+        }
+        return null;
+    }
+
     public void misHooldusTöidVajaTeha(Hooldaja hooldaja, Müügiautomaat müügiautomaat) {
         Scanner sc = new Scanner(System.in);
         System.out.println("1 Palju on automaadis raha?");
         System.out.println("2 Millised tooted on automaadis?");
         System.out.println("3 Võtta kogu raha automaadist välja");
         System.out.println("4 Võtta osa raha automaadist välja");
+        System.out.println("5 Konkreetse toote kohta infot");
+        System.out.println("6 Mitu tükki on kindlat toodet veel automaadis alles");
         System.out.println("0 Soovin hoolduse lõpetada");
 
         while (true) {
@@ -80,16 +92,31 @@ public class Hooldaja {
             switch (tegevusenr) {
                 case 1:
                     hooldaja.automaadisRaha(müügiautomaat);
+                    continue;
                 case 2:
                     hooldaja.automamadisTooteid(müügiautomaat);
+                    continue;
                 case 3:
                     hooldaja.võtaKoguRahaVälja(müügiautomaat);
+                    continue;
                 case 4:
                     hooldaja.võtaOsaliseltRahaVälja(müügiautomaat);
-                case 0:
-                    System.out.println("Hooldus edukalt sooritatud" + "\n");
-                    break;
+                    continue;
+                case 5:
+                    System.out.println("Sisesta toote nimi, mille kohta tahad infot saada");
+                    String otsitav1 = sc.nextLine();
+                    Tooted toodeMilleKohtaInfo = otsitavToode(müügiautomaat, otsitav1);
+                    System.out.println(toodeMilleKohtaInfo.toString());
+                    continue;
+                case 6:
+                    System.out.println("Sisestra toote nimi, mille kohta tahad infot saada");
+                    String otsitav2 = sc.nextLine();
+                    Tooted toodeMituTükkiOtsime = otsitavToode(müügiautomaat, otsitav2);
+                    System.out.println("Toodet " + otsitav2 + " on alles veel " + müügiautomaat.mituTükkiOnToodet(toodeMituTükkiOtsime) + " tükki");
+                    continue;
+
             }
+            if (tegevusenr == 0) break;
         }
     }
 

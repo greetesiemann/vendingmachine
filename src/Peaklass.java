@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Peaklass {
-    /**
-     * Meetod toodete lugemiseks
-     * @param failinimi
-     * @return tagastatakse failist loetud toodete list
-     * @throws FileNotFoundException
-     */
-    static List<Tooted> loeTooted(String failinimi) throws FileNotFoundException {
+
+
+    static List<Tooted> loeTooted(String failinimi) throws Exception {
         List<Tooted> tooted = new ArrayList<Tooted>();
         File fail = new File(failinimi);
         Scanner sc = new Scanner(fail, "UTF-8");
+
         while (sc.hasNextLine()) {
             String rida  = sc.nextLine();
             String[] osad = rida.split(";");
@@ -23,6 +20,7 @@ public class Peaklass {
             double hind = Double.parseDouble(osad[2]);
             int mitutükki = Integer.parseInt(osad[3]);
             int kaal = Integer.parseInt(osad[4]);
+
             if (tunnus.equals("J")) { //tegemist joogiga
                 tooted.add(new Joogid(tootenimi, hind, mitutükki, kaal));
             }
@@ -33,8 +31,9 @@ public class Peaklass {
         return tooted;
     }
 
-// PROOV
-    public static void main(String[] args) throws FileNotFoundException {
+
+
+    public static void main(String[] args) throws Exception {
 
         try {
             List<Tooted> tooted = loeTooted("tooted.txt"); //loeme tooted
@@ -86,17 +85,17 @@ public class Peaklass {
                                 System.out.println("Juhuslikult valitud tooteks osutus " + juhuslikultOstetudToode.getTootenimetus());
                                 System.out.println("Kas oled tootega rahul ja soovid selle osta? ('jah' või 'ei')");
                                 String toodeSobib = sc.nextLine();
+
                                 if (toodeSobib.equals("jah")) {
                                     System.out.println("Palun võta oma ostetud toode " + juhuslikultOstetudToode.getTootenimetus());
                                     juhuslikultOstetudToode.vähendaToodet();
                                     automaatDelta.lisaRaha(juhuslikultOstetudToode); //lisame automaati raha
+
                                     if (juhuslikultOstetudToode.getMituTükki() == 0) { // kontorllime, kas toodet on veel alles
                                         automaatDelta.eemaldaToode(juhuslikultOstetudToode); //vajadusel eemaldame selle
                                     }
                                     break;
 
-                                } else {
-                                    continue;
                                 }
                             }
 
@@ -106,6 +105,7 @@ public class Peaklass {
                             System.out.println("Palun võta oma ostetud toode " + ostetudToode.getTootenimetus());
                             ostetudToode.vähendaToodet(); // vähendame ostetud toote arvu
                             automaatDelta.lisaRaha(ostetudToode); //lisame automaati raha
+
                             if (ostetudToode.getMituTükki() == 0) { // kontorllime, kas toodet on veel alles
                                 automaatDelta.eemaldaToode(ostetudToode); //vajadusel eemaldame selle
                             }
@@ -118,8 +118,6 @@ public class Peaklass {
                             System.out.println("Aitäh, et meid külastasid! Ilusat päeva jätku!");
                             System.out.println();
                             soovinVeelTooteid = false;
-                        } else {
-                            continue;
                         }
                     }
                 }
