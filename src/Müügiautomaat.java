@@ -8,9 +8,10 @@ public class Müügiautomaat {
     private List<Tooted> tooted;
     private double rahaAutomaadis;
 
-    public Müügiautomaat(String automaadinimi) {
+    public Müügiautomaat(String automaadinimi, List<Tooted> tooted) {
         this.automaadinimi = automaadinimi;
-        this.tooted = new ArrayList<>();
+        this.tooted = tooted;
+        this.rahaAutomaadis = 0;
     }
 
     public String getAutomaadinimi() {

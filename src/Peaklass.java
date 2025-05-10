@@ -41,11 +41,8 @@ public class Peaklass {
                 toode.tooteMüügiHind();
             }
 
-            Müügiautomaat automaatDelta = new Müügiautomaat("Delta");
+            Müügiautomaat automaatDelta = new Müügiautomaat("Delta", tooted);
             Hooldaja deltaHooldaja = new Hooldaja("Jaanus Koppel", "Jaanus123"); // loome "Delta" automaadile hooldaja
-            for (int toode = 0; toode < tooted.size(); toode++) { //lisame tooted automaati
-                automaatDelta.lisaToode(tooted.get(toode));
-            }
             while (!tooted.isEmpty()) {
                 //Uurime, kes on automaadi kasutaja
                 Scanner sc = new Scanner(System.in);
@@ -56,7 +53,7 @@ public class Peaklass {
                 if (vastus.equals("hooldaja")) {// kui hooldaja siis kutsume välja erinevaid hooldaja meetodeid
                     System.out.println("Sisesta parool: ");
                     String sisestatudParool = sc.nextLine();
-                    boolean õigeParool = deltaHooldaja.kontrolliParool(sisestatudParool); //kontorllime parooli
+                    boolean õigeParool = deltaHooldaja.kontrolliParool(sisestatudParool); //kontrollime parooli
 
                     if (õigeParool) {
                         System.out.println("Tere hooldaja " + deltaHooldaja.getNimi());
@@ -89,27 +86,34 @@ public class Peaklass {
                                 if (toodeSobib.equals("jah")) {
                                     System.out.println("Palun võta oma ostetud toode " + juhuslikultOstetudToode.getTootenimetus());
                                     juhuslikultOstetudToode.vähendaToodet();
-                                    automaatDelta.lisaRaha(juhuslikultOstetudToode); //lisame automaati raha
-
-                                    if (juhuslikultOstetudToode.getMituTükki() == 0) { // kontorllime, kas toodet on veel alles
-                                        automaatDelta.eemaldaToode(juhuslikultOstetudToode); //vajadusel eemaldame selle
+                                    automaatDelta.lisaRaha(juhuslikultOstetudToode); // lisame automaati raha
+                                    if (juhuslikultOstetudToode.getMituTükki() == 0) { // kontrollime, kas toodet on veel alles
+                                        automaatDelta.eemaldaToode(juhuslikultOstetudToode); // vajadusel eemaldame selle
                                     }
                                     break;
-
                                 }
                             }
 
                         } else {
                             Tooted ostetudToode = tooted.get(Integer.parseInt(tootenr));
-                            //väljastame kleindile toote nimetuse, mis ta ostis
+                            // väljastame kliendile toote nimetuse, mis ta ostis
                             System.out.println("Palun võta oma ostetud toode " + ostetudToode.getTootenimetus());
                             ostetudToode.vähendaToodet(); // vähendame ostetud toote arvu
-                            automaatDelta.lisaRaha(ostetudToode); //lisame automaati raha
+                            automaatDelta.lisaRaha(ostetudToode); // lisame automaati raha
 
-                            if (ostetudToode.getMituTükki() == 0) { // kontorllime, kas toodet on veel alles
-                                automaatDelta.eemaldaToode(ostetudToode); //vajadusel eemaldame selle
+                            if (ostetudToode.getMituTükki() == 0) { // kontrollime, kas toodet on veel alles
+                                automaatDelta.eemaldaToode(ostetudToode); // vajadusel eemaldame selle
                             }
 
+                            if (tooted.isEmpty()) {
+                                System.out.println("Automaadist on tooted otsas");
+                                break;
+                            }
+
+                            System.out.println("Müügiautomaadis ostmiseks olevad tooted: "); // kuvame uuesti allesolevad tooted
+                            for (int indeks = 0; indeks < tooted.size(); indeks++) {
+                                System.out.println(indeks + " " + tooted.get(indeks).getTootenimetus() + " " + tooted.get(indeks).getHind());
+                            }
                         }
 
                         System.out.println("Kas soovid veel midagi osta? ('jah' või 'ei')");
