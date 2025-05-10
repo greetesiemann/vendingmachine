@@ -31,38 +31,47 @@ public class Peaklass {
         return tooted;
     }
 
+    static void hooldajaTegevus(Hooldaja hooldaja, Müügiautomaat automaat) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Oled hooldaja süsteemis");
+        System.out.println("Sisesta parool: ");
+        String sisestatudParool = sc.nextLine();
+        boolean õigeParool = hooldaja.kontrolliParool(sisestatudParool); //kontrollime parooli
 
+        if (õigeParool) {
+            System.out.println("Tere hooldaja " + hooldaja.getNimi());
+            System.out.println("Mida soovid teada?"); // väljastame hooldajale tegevused, mida võimalik teha
+            hooldaja.misHooldusTöidVajaTeha(hooldaja, automaat);
+        } else {
+            System.out.println("Sisestasid vale parooli. Palun proovi uuesti!");
+        }
+    }
 
     public static void main(String[] args) throws Exception {
 
         try {
-            List<Tooted> tooted = loeTooted("tooted.txt"); //loeme tooted
-            for (Tooted toode : tooted) { //seadistame toodetele müügi hinna
+            List<Tooted> tooted = loeTooted("tooted.txt"); // loeme tooted
+            for (Tooted toode : tooted) { // seadistame toodetele müügihinna
                 toode.tooteMüügiHind();
             }
 
             Müügiautomaat automaatDelta = new Müügiautomaat("Delta", tooted);
             Hooldaja deltaHooldaja = new Hooldaja("Jaanus Koppel", "Jaanus123"); // loome "Delta" automaadile hooldaja
-            while (!tooted.isEmpty()) {
+            while (true) {
                 //Uurime, kes on automaadi kasutaja
                 Scanner sc = new Scanner(System.in);
+
+                if (tooted.isEmpty()) {
+                    hooldajaTegevus(deltaHooldaja, automaatDelta);
+                }
+
                 System.out.println("Tere tulemast!");
                 System.out.println("Kas oled klient või hooldaja?");
                 String vastus = sc.nextLine();
 
                 if (vastus.equals("hooldaja")) {// kui hooldaja siis kutsume välja erinevaid hooldaja meetodeid
-                    System.out.println("Sisesta parool: ");
-                    String sisestatudParool = sc.nextLine();
-                    boolean õigeParool = deltaHooldaja.kontrolliParool(sisestatudParool); //kontrollime parooli
-
-                    if (õigeParool) {
-                        System.out.println("Tere hooldaja " + deltaHooldaja.getNimi());
-                        System.out.println("Mida soovid teada?"); // väljastame hooldajale tegevused, mida võimalik teha
-                        deltaHooldaja.misHooldusTöidVajaTeha(deltaHooldaja, automaatDelta);
-                    } else {
-                        System.out.println("Sisestasid vale parooli. Palun proovi uuesti!");
-                    }
-
+                    hooldajaTegevus(deltaHooldaja, automaatDelta);
+                    
                 } else if (vastus.equals("klient")) {
                     System.out.println("Müügiautomaadis ostmiseks olevad tooted: ");
 
