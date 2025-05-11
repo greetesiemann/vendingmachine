@@ -1,2 +1,9 @@
-Kummikommid;S;0.79;3;80
-Twix;S;0.49;2;50
+Kummikommid;S;0.79;15;80
+Twix;S;0.49;17;50
+Snickers;S;0.53;12;50
+RedBull;J;0.90;19;250
+KinderBueno;S;0.66;13;43
+CocaCola;J;0.47;21;250
+Bounty;S;0.56;17;57
+Belief;J;0.99;16;530
+Vesi;J;0.33;19;500
