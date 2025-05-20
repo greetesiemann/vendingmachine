@@ -73,6 +73,7 @@ public class Peaklass {
                     hooldajaTegevus(deltaHooldaja, automaatDelta);
                     
                 } else if (vastus.equals("klient")) {
+                    double toodeteKoguSumma = 0;
                     System.out.println("Müügiautomaadis ostmiseks olevad tooted: ");
 
                     for (int indeks = 0; indeks < tooted.size(); indeks++) { // kui klient siis väljastame tooted, koos vastavate numbrite ja hindadega
@@ -88,11 +89,14 @@ public class Peaklass {
                             while (true) { //tsükkel, mis otsib juhusliku toote ja pakub seda kliendile
                                 int juhuarv = (int) (Math.random() * tooted.size());
                                 Tooted juhuslikultOstetudToode = tooted.get(juhuarv);
-                                System.out.println("Juhuslikult valitud tooteks osutus " + juhuslikultOstetudToode.getTootenimetus());
+                                System.out.println("Juhuslikult valitud tooteks osutus " + juhuslikultOstetudToode.getTootenimetus() + " hinnaga "
+                                + juhuslikultOstetudToode.getHind() + "€");
                                 System.out.println("Kas oled tootega rahul ja soovid selle osta? ('jah' või 'ei')");
                                 String toodeSobib = sc.nextLine();
 
                                 if (toodeSobib.equals("jah")) {
+                                    toodeteKoguSumma += juhuslikultOstetudToode.getHind();
+                                    System.out.println("Rahasumma on " + toodeteKoguSumma + "€");
                                     System.out.println("Palun võta oma ostetud toode " + juhuslikultOstetudToode.getTootenimetus());
                                     juhuslikultOstetudToode.vähendaToodet();
                                     automaatDelta.lisaRaha(juhuslikultOstetudToode); // lisame automaati raha
@@ -107,6 +111,8 @@ public class Peaklass {
                             Tooted ostetudToode = tooted.get(Integer.parseInt(tootenr));
                             // väljastame kliendile toote nimetuse, mis ta ostis
                             System.out.println("Palun võta oma ostetud toode " + ostetudToode.getTootenimetus());
+                            toodeteKoguSumma += ostetudToode.getHind();
+                            System.out.println("Hetke kogusumma on " + toodeteKoguSumma + "€");
                             ostetudToode.vähendaToodet(); // vähendame ostetud toote arvu
                             automaatDelta.lisaRaha(ostetudToode); // lisame automaati raha
 
