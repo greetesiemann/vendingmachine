@@ -52,27 +52,36 @@ public class Hooldaja {
     }
 
     public void võtaOsaliseltRahaVälja (Müügiautomaat automaat) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Automaadis on raha: " + automaat.getRahaAutomaadis());
-        System.out.println("Sisesta väljavõetav summa: ");
-        double väljavõetavRaha = Double.parseDouble(sc.nextLine());
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Automaadis on raha: " + automaat.getRahaAutomaadis());
+            System.out.println("Sisesta väljavõetav summa: ");
+            double väljavõetavRaha = Double.parseDouble(sc.nextLine());
+            if (väljavõetavRaha < 0) {
+                throw new IllegalArgumentException("Summa ei saa olla negatiivne.");
+            }
 
-        if (automaat.getRahaAutomaadis() - väljavõetavRaha >= 0) { // kui automaadis on piisavalt raha
-            automaat.setRahaAutomaadis(automaat.getRahaAutomaadis() - väljavõetavRaha); // salvestame allesjäänud raha
-        }
-        else {
-            System.out.println("Sisestasid liiga suure summa. Palun sisesta väiksem summa.");
+            if (automaat.getRahaAutomaadis() - väljavõetavRaha >= 0) { // kui automaadis on piisavalt raha
+                automaat.setRahaAutomaadis(automaat.getRahaAutomaadis() - väljavõetavRaha); // salvestame allesjäänud raha
+            }
+            else {
+                System.out.println("Sisestasid liiga suure summa. Palun sisesta väiksem summa.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Sisesta korrektne arvuline summa.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public Tooted otsitavToode(Müügiautomaat müügiautomaat, String otsitavToode) {
+    public Tooted otsitavToode(Müügiautomaat müügiautomaat, String otsitavToode) throws ToodeEiLeitudErind {
         List<Tooted> tooted = müügiautomaat.getTooted();
         for (Tooted toode : tooted) {
             if (toode.getTootenimetus().equals(otsitavToode)) {
                 return toode;
             }
         }
-        return null;
+        throw new ToodeEiLeitudErind("Toodet '" + otsitavToode + "' ei leitud.");
     }
 
     public void misHooldusTöidVajaTeha(Hooldaja hooldaja, Müügiautomaat müügiautomaat) {
@@ -105,14 +114,28 @@ public class Hooldaja {
                 case 5:
                     System.out.println("Sisesta toote nimi, mille kohta tahad infot saada");
                     String otsitav1 = sc.nextLine();
-                    Tooted toodeMilleKohtaInfo = otsitavToode(müügiautomaat, otsitav1);
-                    System.out.println(toodeMilleKohtaInfo.toString());
+                    Tooted toodeMilleKohtaInfo = null;
+                    try {
+                        toodeMilleKohtaInfo = otsitavToode(müügiautomaat, otsitav1);
+                    } catch (ToodeEiLeitudErind e) {
+                        System.out.println(e.getMessage());;
+                    }
+                    if (toodeMilleKohtaInfo != null) {
+                        System.out.println(toodeMilleKohtaInfo.toString());
+                    }
                     continue;
                 case 6:
                     System.out.println("Sisesta toote nimi, mille kohta tahad infot saada");
                     String otsitav2 = sc.nextLine();
-                    Tooted toodeMituTükkiOtsime = otsitavToode(müügiautomaat, otsitav2);
-                    System.out.println("Toodet " + otsitav2 + " on alles veel " + müügiautomaat.mituTükkiOnToodet(toodeMituTükkiOtsime) + " tükki");
+                    Tooted toodeMituTükkiOtsime = null;
+                    try {
+                        toodeMituTükkiOtsime = otsitavToode(müügiautomaat, otsitav2);
+                    } catch (ToodeEiLeitudErind e) {
+                        System.out.println(e.getMessage());
+                    }
+                    if (toodeMituTükkiOtsime != null) {
+                        System.out.println("Toodet " + otsitav2 + " on alles veel " + müügiautomaat.mituTükkiOnToodet(toodeMituTükkiOtsime) + " tükki");
+                    }
                     continue;
 
             }

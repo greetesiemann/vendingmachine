@@ -5,16 +5,16 @@ import java.util.Scanner;
 
 public class Peaklass {
 
-
-    static List<Tooted> loeTooted(String failinimi) throws IOException {
+    static List<Tooted> loeTooted(String failinimi) throws IOException, TooteLugemiseViga {
         List<Tooted> tooted = new ArrayList<Tooted>();
         try (BufferedReader br = new BufferedReader(new FileReader(failinimi))) {
             String rida;
 
             while ((rida = br.readLine()) != null) {
                 String[] osad = rida.split(";");
+                if (osad.length != 5) throw new TooteLugemiseViga("Vigane rida: " + rida);
 
-                String tootenimi  = osad[0];
+                String tootenimi = osad[0];
                 String tunnus = osad[1];
                 double hind = Double.parseDouble(osad[2]);
                 int mitutükki = Integer.parseInt(osad[3]);
@@ -70,14 +70,13 @@ public class Peaklass {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception, FileNotFoundException {
 
+        List<Tooted> tooted = loeTooted("tooted.txt"); // loeme tooted
         try {
-            List<Tooted> tooted = loeTooted("tooted.txt"); // loeme tooted
             for (Tooted toode : tooted) { // seadistame toodetele müügihinna
                 toode.tooteMüügiHind();
             }
-
             Müügiautomaat automaatDelta = new Müügiautomaat("Delta", tooted);
             Hooldaja deltaHooldaja = new Hooldaja("Jaanus Koppel", "Jaanus123"); // loome "Delta" automaadile hooldaja
             while (true) {
@@ -94,7 +93,7 @@ public class Peaklass {
 
                 if (vastus.equals("hooldaja")) {// kui hooldaja siis kutsume välja erinevaid hooldaja meetodeid
                     hooldajaTegevus(deltaHooldaja, automaatDelta);
-                    
+
                 } else if (vastus.equals("klient")) {
                     double toodeteKoguSumma = 0;
                     System.out.println("Müügiautomaadis ostmiseks olevad tooted: ");
@@ -131,46 +130,46 @@ public class Peaklass {
                             }
 
                         } else {
-                            Tooted ostetudToode = tooted.get(Integer.parseInt(tootenr));
-                            // väljastame kliendile toote nimetuse, mis ta ostis
-                            System.out.println("Palun võta oma ostetud toode " + ostetudToode.getTootenimetus());
-                            toodeteKoguSumma += ostetudToode.getHind();
-                            System.out.println("Hetke kogusumma on " + toodeteKoguSumma + "€");
-                            ostetudToode.vähendaToodet(); // vähendame ostetud toote arvu
-                            automaatDelta.lisaRaha(ostetudToode); // lisame automaati raha
+                            try {
+                                Tooted ostetudToode = tooted.get(Integer.parseInt(tootenr));
+                                // väljastame kliendile toote nimetuse, mis ta ostis
+                                System.out.println("Palun võta oma ostetud toode " + ostetudToode.getTootenimetus());
+                                toodeteKoguSumma += ostetudToode.getHind();
+                                System.out.println("Hetke kogusumma on " + toodeteKoguSumma + "€");
+                                ostetudToode.vähendaToodet(); // vähendame ostetud toote arvu
+                                automaatDelta.lisaRaha(ostetudToode); // lisame automaati raha
 
-                            if (ostetudToode.getMituTükki() == 0) { // kontrollime, kas toodet on veel alles
-                                automaatDelta.eemaldaToode(ostetudToode); // vajadusel eemaldame selle
-                            }
+                                if (ostetudToode.getMituTükki() == 0) { // kontrollime, kas toodet on veel alles
+                                    automaatDelta.eemaldaToode(ostetudToode); // vajadusel eemaldame selle
+                                }
 
-                            if (tooted.isEmpty()) {
-                                System.out.println("Automaadist on tooted otsas");
-                                break;
-                            }
+                                if (tooted.isEmpty()) {
+                                    System.out.println("Automaadist on tooted otsas");
+                                    break;
+                                }
 
-                            System.out.println("Müügiautomaadis ostmiseks olevad tooted: "); // kuvame uuesti allesolevad tooted
-                            for (int indeks = 0; indeks < tooted.size(); indeks++) {
-                                System.out.println(indeks + " " + tooted.get(indeks).getTootenimetus() + " " + tooted.get(indeks).getHind());
+                                System.out.println("Müügiautomaadis ostmiseks olevad tooted: "); // kuvame uuesti allesolevad tooted
+                                for (int indeks = 0; indeks < tooted.size(); indeks++) {
+                                    System.out.println(indeks + " " + tooted.get(indeks).getTootenimetus() + " " + tooted.get(indeks).getHind());
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Palun sisesta korrektne number");
                             }
                         }
 
                         System.out.println("Kas soovid veel midagi osta? ('jah' või 'ei')");
                         String valik = sc.nextLine();
                         if (valik.equals("ei")) {
-                            // PANIN PRAEGU, ET TA KIRJUTAKS FAILI "alles.txt"
-                            // TEOORIAS SAAKS PANNA KA 'tooted.txt' FAIL, SIIS SAAKSIME PROGRAMMI VAHEPEAL SULGEDA
-                            //salvesta(tooted, "alles.txt");
                             System.out.println("Aitäh, et meid külastasid! Ilusat päeva jätku!");
                             System.out.println();
                             soovinVeelTooteid = false;
                         }
                     }
                 }
+                break;
             }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Faili ei leitud!");
+        } finally {
+            salvesta(tooted, "tooted.txt");
         }
-
     }
 }
