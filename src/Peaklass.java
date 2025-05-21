@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,28 +6,52 @@ import java.util.Scanner;
 public class Peaklass {
 
 
-    static List<Tooted> loeTooted(String failinimi) throws Exception {
+    static List<Tooted> loeTooted(String failinimi) throws IOException {
         List<Tooted> tooted = new ArrayList<Tooted>();
-        File fail = new File(failinimi);
-        Scanner sc = new Scanner(fail, "UTF-8");
+        try (BufferedReader br = new BufferedReader(new FileReader(failinimi))) {
+            String rida;
 
-        while (sc.hasNextLine()) {
-            String rida  = sc.nextLine();
-            String[] osad = rida.split(";");
-            String tootenimi  = osad[0];
-            String tunnus = osad[1];
-            double hind = Double.parseDouble(osad[2]);
-            int mitutükki = Integer.parseInt(osad[3]);
-            int kaal = Integer.parseInt(osad[4]);
+            while ((rida = br.readLine()) != null) {
+                String[] osad = rida.split(";");
 
-            if (tunnus.equals("J")) { //tegemist joogiga
-                tooted.add(new Joogid(tootenimi, hind, mitutükki, kaal));
-            }
-            if (tunnus.equals("S")) { //tegemist söögiga
-                tooted.add(new Söögid(tootenimi, hind, mitutükki, kaal));
+                String tootenimi  = osad[0];
+                String tunnus = osad[1];
+                double hind = Double.parseDouble(osad[2]);
+                int mitutükki = Integer.parseInt(osad[3]);
+                int kaal = Integer.parseInt(osad[4]);
+
+                if (tunnus.equals("J")) { //tegemist joogiga
+                    tooted.add(new Joogid(tootenimi, hind, mitutükki, kaal));
+                }
+                if (tunnus.equals("S")) { //tegemist söögiga
+                    tooted.add(new Söögid(tootenimi, hind, mitutükki, kaal));
+                }
+            }return tooted;
+        }
+
+    }
+
+    static void salvesta(List<Tooted> allesjäänud_tooted, String failinimi) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(failinimi))) {
+            for (Tooted toode : allesjäänud_tooted) {
+                String tunnus = "";
+                int kaal = 0;
+
+                // kui toode kuulub 'Joogid' klassi
+                if (toode.getClass() == Joogid.class) {
+                    tunnus = "J";
+                    kaal = ((Joogid) toode).getMaht_ml();
+
+                // kui toode kuulub 'Söögid' klassi
+                } else if (toode.getClass() == Söögid.class){
+                    tunnus = "S";
+                    kaal = ((Söögid) toode).getKaal_g();
+                }
+                // kirjutame tooted tagasi faili
+                bw.write(toode.getTootenimetus() + ";" + tunnus + ";" + toode.getHind() + ";" + toode.getMituTükki() + ";" + kaal);
+                bw.newLine();
             }
         }
-        return tooted;
     }
 
     static void hooldajaTegevus(Hooldaja hooldaja, Müügiautomaat automaat) {
@@ -134,6 +157,9 @@ public class Peaklass {
                         System.out.println("Kas soovid veel midagi osta? ('jah' või 'ei')");
                         String valik = sc.nextLine();
                         if (valik.equals("ei")) {
+                            // PANIN PRAEGU, ET TA KIRJUTAKS FAILI "alles.txt"
+                            // TEOORIAS SAAKS PANNA KA 'tooted.txt' FAIL, SIIS SAAKSIME PROGRAMMI VAHEPEAL SULGEDA
+                            //salvesta(tooted, "alles.txt");
                             System.out.println("Aitäh, et meid külastasid! Ilusat päeva jätku!");
                             System.out.println();
                             soovinVeelTooteid = false;
